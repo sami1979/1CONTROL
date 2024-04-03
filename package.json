@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^29.1.6"
+  },
+  "dependencies": {
+    "webmidi": "^3.1.8"
   }
 }
