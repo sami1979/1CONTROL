@@ -29,13 +29,18 @@ function startWebMidi() {
 app.whenReady().then(() => {
   createWindow();
   log.info('Electron Window started');
+  startWebMidi();
+  log.info('WebMidi started');
+});
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  })
-})
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+    startWebMidi();
+    log.info('WebMidi started');
+  }
+});
+
 
 app.on('window-all-closed', () => {
   WebMidi.disable();
