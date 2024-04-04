@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron/main')
 const { WebMidi } = require("webmidi");
 const { onMidiEnabled } = require("./WebMidiIMP")
 const path = require('node:path')
+const log = require('electron-log/main')
 
 const debug = false;
 
@@ -27,6 +28,7 @@ function startWebMidi() {
 
 app.whenReady().then(() => {
   createWindow();
+  log.info('Electron Window started');
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
