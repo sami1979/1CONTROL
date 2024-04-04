@@ -22,8 +22,10 @@ function onMidiEnabled() {
   
   outputDevice = getOutputDevices()[1];
   //console.log(getOutputDeviceDetails())
-  console.log(sendCC(outputDevice, 16, 127, 126));
-  console.log(sendPC(outputDevice, 16, 127));
+  const outputCC = sendCC(outputDevice, 16, 127, 126);
+  console.log(outputCC);
+  const outputPC = sendPC(outputDevice, 16, 127);
+  console.log(outputPC);
 }
 
 function sendCC(outputDevice, channel, cc, value) {

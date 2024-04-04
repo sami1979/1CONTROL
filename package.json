@@ -4,7 +4,7 @@
   "description": "1Control emulation from 1Control Bluguitar",
   "main": "main.js",
   "scripts": {
-    "start": "electron --inspect=9222 .",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,7 +13,6 @@
     "electron": "^29.1.6"
   },
   "dependencies": {
-    "log-to-file": "^3.0.3",
     "webmidi": "^3.1.8"
   }
 }
