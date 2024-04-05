@@ -1,7 +1,6 @@
 "use strict";
 
 const { WebMidi } = require("webmidi");
-//import {WebMidi} from "webmidi";
 
 let outputDevice = null;
 
@@ -20,7 +19,7 @@ function onMidiEnabled() {
   sendCC(getOutputDevices()[0], 1, 1, 1);
   */
   
-  outputDevice = getOutputDevices()[1];
+  outputDevice = getOutputDevices()[0];
   //console.log(getOutputDeviceDetails())
   const outputCC = sendCC(outputDevice, 16, 127, 126);
   console.log(outputCC);
