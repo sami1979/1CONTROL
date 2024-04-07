@@ -3,7 +3,7 @@
 function updateDisplay(rangeElement, valueElement, switchElement) {
     let value = rangeElement.value;
     if (switchElement.checked) {
-        value = parseInt(value / 2.55).toFixed(0);
+        value = parseInt(value / 1.27).toFixed(0);
         value = String(value).concat(" %");
     }
     valueElement.textContent = value;
