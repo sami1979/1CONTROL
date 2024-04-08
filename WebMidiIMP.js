@@ -20,11 +20,11 @@ function onMidiEnabled() {
   */
   
   outputDevice = getOutputDevices()[0];
-  //console.log(getOutputDeviceDetails())
-  const outputCC = sendCC(outputDevice, 16, 127, 126);
-  console.log(outputCC);
-  const outputPC = sendPC(outputDevice, 16, 127);
-  console.log(outputPC);
+  // console.log(getOutputDeviceDetails())
+  // const outputCC = sendCC(outputDevice, 16, 127, 126);
+  // console.log(outputCC);
+  // const outputPC = sendPC(outputDevice, 16, 127);
+  // console.log(outputPC);
 }
 
 function sendCC(outputDevice, channel, cc, value) {
@@ -37,6 +37,11 @@ function sendCC(outputDevice, channel, cc, value) {
   } catch (error) {
       console.log(error);
   }
+}
+
+function sendCCselectedOut(channel, cc, value) {
+  sendCC(outputDevice, channel, cc, value);
+  // console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`)
 }
 
 function sendPC(outputDevice, channel, pc) {
@@ -92,8 +97,6 @@ function getOutputDeviceDetails() {
   return deviceList
 }
 
-
-
 function displayInputOutputDevices() {
   // Display available MIDI input devices
   console.log("Input Devices:")
@@ -115,6 +118,20 @@ function displayInputOutputDevices() {
   }
 }
 
+function startWebMidi() {
+  WebMidi
+    .enable()
+    .then(onMidiEnabled)
+    .catch(err => console.log(err));
+}
+
+function disableWebMidi() {
+  WebMidi.disable();
+}
+
 module.exports= {
-  onMidiEnabled
+  onMidiEnabled,
+  sendCCselectedOut,
+  startWebMidi,
+  disableWebMidi
 }

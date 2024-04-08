@@ -1,10 +1,11 @@
-const { app, BrowserWindow } = require('electron/main')
-const { WebMidi } = require("webmidi");
-const { onMidiEnabled } = require("./WebMidiIMP")
+const { app, BrowserWindow, ipcMain } = require('electron/main')
+//const { WebMidi } = require("webmidi");
+const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi } = require("./WebMidiIMP")
 const path = require('node:path')
 const log = require('electron-log/main')
 
-const debug = false;
+const debuggerTools = true;
+
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -14,36 +15,33 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+  ipcMain.on('send-CC', (event, channel, cc, value) => {
+    sendCCselectedOut(channel, cc, value)
+    console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`)
+  });
 
-  if (debug) { win.webContents.openDevTools(); }
+  if (debuggerTools) { win.webContents.openDevTools(); }
+
   win.loadFile('main.html');
-}
-
-function startWebMidi() {
-  WebMidi
-    .enable()
-    .then(onMidiEnabled)
-    .catch(err => console.log(err));
 }
 
 app.whenReady().then(() => {
   createWindow();
   log.info('Electron Window started');
+
   startWebMidi();
-  log.info('WebMidi started');
 });
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
     startWebMidi();
-    log.info('WebMidi started');
+    createWindow();
   }
 });
 
 
 app.on('window-all-closed', () => {
-  WebMidi.disable();
+  disableWebMidi();
   if (process.platform !== 'darwin') {
     app.quit();
   }
