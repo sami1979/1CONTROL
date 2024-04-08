@@ -18,7 +18,7 @@ function start() {
 
     rangeElement.addEventListener("change", function() {
         updateDisplay(rangeElement, valueElement, switchElement);
-        window.WebMidiAPI.sendCCPowerSoak(rangeElement.value);
+        window.WebMidiAPI.sendCC2ndMASTER(rangeElement.value);
     });
 
     switchElement.addEventListener("change", function() {
