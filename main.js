@@ -4,7 +4,7 @@ const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi } = requi
 const path = require('node:path')
 const log = require('electron-log/main')
 
-const debuggerTools = true;
+const debuggerTools = false;
 
 
 function createWindow () {
@@ -19,6 +19,24 @@ function createWindow () {
     sendCCselectedOut(channel, cc, value)
     console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`)
   });
+
+  
+  win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
+    if (permission === 'midi' || permission === 'midiSysex') {
+      console.log('Midi Permission true');
+      callback(true);
+    } else {
+      callback(false);
+    }
+  })
+  
+  win.webContents.session.setPermissionCheckHandler((webContents, permission, requestingOrigin) => {
+    if (permission === 'midi' || permission === 'midiSysex') {
+      return true;
+    }
+    return false;
+  });
+  
 
   if (debuggerTools) { win.webContents.openDevTools(); }
 

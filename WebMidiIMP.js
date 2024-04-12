@@ -19,10 +19,10 @@ function onMidiEnabled() {
   sendCC(getOutputDevices()[0], 1, 1, 1);
   */
   
-  outputDevice = getOutputDevices()[0];
-  // console.log(getOutputDeviceDetails())
-  // const outputCC = sendCC(outputDevice, 16, 127, 126);
-  // console.log(outputCC);
+  outputDevice = getOutputDevices()[1];
+  console.log(getOutputDeviceDetails()[1])
+  const outputCC = sendCC(outputDevice, 16, 127, 126);
+  console.log(outputCC);
   // const outputPC = sendPC(outputDevice, 16, 127);
   // console.log(outputPC);
 }
@@ -41,7 +41,6 @@ function sendCC(outputDevice, channel, cc, value) {
 
 function sendCCselectedOut(channel, cc, value) {
   sendCC(outputDevice, channel, cc, value);
-  // console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`)
 }
 
 function sendPC(outputDevice, channel, pc) {
