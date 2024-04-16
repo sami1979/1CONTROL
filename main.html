@@ -8,33 +8,35 @@
     <title>1Control</title>
 </head>
 <body>
-    <div id="first-knob-row">
-        <div class="knob-container">
-            <div>SOAK</div>
-            <input type="range" id="soak-knob" class="input-knob soak" data-diameter="120" 
-                data-src="./images/buttons/knob70.png" data-sprites="100"
-                min="0" max="127" value="0" />  
-            <div id="soak-value" class="soak"></div> 
+    <div id="controls">
+        <div id="first-knob-row">
+            <div class="knob-container">
+                <div>SOAK</div>
+                <input type="range" id="soak-knob" class="input-knob soak" data-diameter="120" 
+                    data-src="./images/buttons/knob70.png" data-sprites="100"
+                    min="0" max="127" value="0" />  
+                <div id="soak-value" class="soak"></div> 
+            </div>
         </div>
+        <div id="second-knob-row">
+            <div class="knob-container">
+                <div>GAIN</div>
+                <input type="range" id="gain-knob" class="input-knob gain" data-diameter="120" 
+                    data-src="./images/buttons/knob70.png" data-sprites="100"
+                    min="0" max="127" value="0" />
+                <div id="gain-value" class="gain"></div>
+            </div>
+            <div class="knob-container">
+                <div>MASTER</div>
+                <input type="range" id="master-knob" class="input-knob master" data-diameter="120" 
+                    data-src="./images/buttons/knob70.png" data-sprites="100"
+                    min="0" max="127" value="0" />
+                <div id="master-value" class="master"></div>
+            </div>
+        </div>
+        <input type="checkbox" id="switch" class="input-switch" 
+            data-src="./images/buttons/switch_offon.png" data-diameter="80" checked/>
     </div>
-    <div id="second-knob-row">
-        <div class="knob-container">
-            <div>GAIN</div>
-            <input type="range" id="gain-knob" class="input-knob gain" data-diameter="120" 
-                data-src="./images/buttons/knob70.png" data-sprites="100"
-                min="0" max="127" value="0" />
-            <div id="gain-value" class="gain"></div>
-        </div>
-        <div class="knob-container">
-            <div>MASTER</div>
-            <input type="range" id="master-knob" class="input-knob master" data-diameter="120" 
-                data-src="./images/buttons/knob70.png" data-sprites="100"
-                min="0" max="127" value="0" />
-            <div id="master-value" class="master"></div>
-        </div>
-    </div>
-    <input type="checkbox" id="switch" class="input-switch" 
-        data-src="./images/buttons/switch_offon.png" data-diameter="80" checked/>
     <script src="./input-knobs.js"></script>
     <script src="./button.js"></script>
 </body>
