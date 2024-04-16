@@ -4,7 +4,7 @@ const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi } = requi
 const path = require('node:path')
 const log = require('electron-log/main')
 
-const debuggerTools = false;
+const debuggerTools = true;
 
 
 function createWindow () {

@@ -4,17 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP  needs to be defined -->
+    <link rel="stylesheet" href="main.css">
     <title>1Control</title>
 </head>
 <body>
-    <input type="range" id="knob" class="input-knob" data-diameter="120" 
-        data-src="./images/buttons/knob70.png" data-sprites="100"
-        min="0" max="127" value="0" />
-    <p id="value" style="position: relative; left: 3%;"></p>
+    <div id="first-knob-row">
+        <div class="knob-container">
+            <div>SOAK</div>
+            <input type="range" id="soak-knob" class="input-knob soak" data-diameter="120" 
+                data-src="./images/buttons/knob70.png" data-sprites="100"
+                min="0" max="127" value="0" />  
+            <div id="soak-value" class="soak"></div> 
+        </div>
+    </div>
+    <div id="second-knob-row">
+        <div class="knob-container">
+            <div>GAIN</div>
+            <input type="range" id="gain-knob" class="input-knob gain" data-diameter="120" 
+                data-src="./images/buttons/knob70.png" data-sprites="100"
+                min="0" max="127" value="0" />
+            <div id="gain-value" class="gain"></div>
+        </div>
+        <div class="knob-container">
+            <div>MASTER</div>
+            <input type="range" id="master-knob" class="input-knob master" data-diameter="120" 
+                data-src="./images/buttons/knob70.png" data-sprites="100"
+                min="0" max="127" value="0" />
+            <div id="master-value" class="master"></div>
+        </div>
+    </div>
     <input type="checkbox" id="switch" class="input-switch" 
         data-src="./images/buttons/switch_offon.png" data-diameter="80" checked/>
     <script src="./input-knobs.js"></script>
     <script src="./button.js"></script>
-    <script> start() </script>
 </body>
 </html>

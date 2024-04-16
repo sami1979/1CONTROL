@@ -1,0 +1,16 @@
+#first-knob-row {
+    display: flex;
+    justify-content: center;
+}
+
+#second-knob-row {
+    display: flex;
+    justify-content: center;
+}
+
+
+.knob-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
