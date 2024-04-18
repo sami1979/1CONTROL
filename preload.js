@@ -15,5 +15,6 @@ contextBridge.exposeInMainWorld('WebMidiAPI', {
     if (value > -1 && value < 128) {
       ipcRenderer.send('send-CC', 1, 30, value);
     }
-  }
+  },
+  openMidiDeviceSelection: () => ipcRenderer.invoke('open-DeviceSelection')
 })

@@ -132,5 +132,6 @@ module.exports= {
   onMidiEnabled,
   sendCCselectedOut,
   startWebMidi,
-  disableWebMidi
+  disableWebMidi,
+  getOutputDevices
 }
