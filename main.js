@@ -1,10 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 //const { WebMidi } = require("webmidi");
-const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices } = require("./WebMidiIMP")
+const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
 const path = require('node:path')
 const log = require('electron-log/main')
 
 const debuggerTools = true;
+log.initialize();
+log.transports.console.level = 'debug';
 
 
 function createMainWindow() {
@@ -16,13 +18,13 @@ function createMainWindow() {
     }
   })
   
-
-  
   win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
     if (permission === 'midi' || permission === 'midiSysex') {
-      console.log('Midi Permission true');
+      log.debug('Set Midi Permission true');
       callback(true);
-    } else {
+    } 
+    else {
+      log.debug('Don\'t Set Midi Permission true')
       callback(false);
     }
   })
@@ -51,7 +53,7 @@ function createMidiDeviceSelectWindow(parentWindow) {
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true, // Required for dropdown interaction
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'device-popup-preload.js')
     }
   });
 
@@ -80,15 +82,29 @@ app.whenReady().then(() => {
         name: device.name,
         id: device.id
       }
-      console.log(deviceDetails);
       deviceList.push(deviceDetails);
+      log.debug(`ipcMain.handle(open-DeviceSelection) DeviceList: ${deviceList}`);
     })
     return deviceList;
   });
 
+  ipcMain.on('set-MidiOutputId', (event, midiOutputId) => {
+    const devices = getOutputDevices();
+    log.debug(`ipcMain.on(set-MidiOutputId ) midiOutputDevice Before: ${midiOutputDevice}`);
+    devices.forEach((device) => {
+      log.debug(`${device.id} :  ${midiOutputId}`)
+      if (device.id === midiOutputId) {
+        setActiveMidiOutputDevice(device);
+        log.debug(`ipcMain.on(set-MidiOutputId ) midiOutputDevice After: ${getActiveMidiOutputDevice().id}`)
+      }
+    })
+  });
+
+  ipcMain.on('close-DevicePopup', (event) => popupWindow.close());
+
   startWebMidi();
   const mainWindow = createMainWindow();
-  createMidiDeviceSelectWindow(mainWindow);
+  popupWindow = createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 
   

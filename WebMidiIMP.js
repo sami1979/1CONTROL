@@ -2,7 +2,15 @@
 
 const { WebMidi } = require("webmidi");
 
-let outputDevice = null;
+let midiOutputDevice = null;
+
+function setActiveMidiOutputDevice(outputDevice){
+  midiOutputDevice = outputDevice;
+}
+
+function getActiveMidiOutputDevice() {
+  return midiOutputDevice;
+}
 
 // Initialize WebMidi
 
@@ -19,11 +27,11 @@ function onMidiEnabled() {
   sendCC(getOutputDevices()[0], 1, 1, 1);
   */
   
-  outputDevice = getOutputDevices()[1];
+  //midiOutputDevice = getOutputDevices()[1];
   //console.log(getOutputDeviceDetails()[1])
-  const outputCC = sendCC(outputDevice, 16, 127, 126);
+  //const outputCC = sendCC(midiOutputDevice, 16, 127, 126);
   //console.log(outputCC);
-  // const outputPC = sendPC(outputDevice, 16, 127);
+  // const outputPC = sendPC(midiOutputDevice, 16, 127);
   // console.log(outputPC);
 }
 
@@ -40,7 +48,7 @@ function sendCC(outputDevice, channel, cc, value) {
 }
 
 function sendCCselectedOut(channel, cc, value) {
-  sendCC(outputDevice, channel, cc, value);
+  sendCC(midiOutputDevice, channel, cc, value);
 }
 
 function sendPC(outputDevice, channel, pc) {
@@ -133,5 +141,7 @@ module.exports= {
   sendCCselectedOut,
   startWebMidi,
   disableWebMidi,
-  getOutputDevices
+  getOutputDevices,
+  getActiveMidiOutputDevice,
+  setActiveMidiOutputDevice
 }

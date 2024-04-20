@@ -16,5 +16,6 @@ contextBridge.exposeInMainWorld('WebMidiAPI', {
       ipcRenderer.send('send-CC', 1, 30, value);
     }
   },
-  openMidiDeviceSelection: () => ipcRenderer.invoke('open-DeviceSelection')
+  openMidiDeviceSelection: () => ipcRenderer.invoke('open-DeviceSelection'),
+  setMidiOutputId: (midiOutputId) => ipcRenderer.send('set-MidiOutputId', midiOutputId)
 })
