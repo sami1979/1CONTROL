@@ -1,7 +1,7 @@
 {
-  "name": "1control",
+  "name": "1CONTROL",
   "version": "0.0.1",
-  "description": "1Control emulation from 1Control Bluguitar",
+  "description": "1CONTROL emulation from 1CONTROL Bluguitar",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
