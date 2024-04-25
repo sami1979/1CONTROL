@@ -2,14 +2,20 @@
 
 const { WebMidi } = require("webmidi");
 
-let midiOutputDevice = null;
+const midiOutputDevice = (() => {
+  let outputdevice = null;
+  return {
+    getInstance: () => { return outputdevice; },
+    setInstance: (device) => { outputdevice = device; }
+  }
+})();
 
 function setActiveMidiOutputDevice(outputDevice){
-  midiOutputDevice = outputDevice;
+  midiOutputDevice.setInstance(outputDevice);
 }
 
 function getActiveMidiOutputDevice() {
-  return midiOutputDevice;
+  return midiOutputDevice.getInstance();
 }
 
 // Initialize WebMidi
@@ -48,7 +54,7 @@ function sendCC(outputDevice, channel, cc, value) {
 }
 
 function sendCCselectedOut(channel, cc, value) {
-  sendCC(midiOutputDevice, channel, cc, value);
+  sendCC(midiOutputDevice.getInstance(), channel, cc, value);
 }
 
 function sendPC(outputDevice, channel, pc) {
