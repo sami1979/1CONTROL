@@ -12,7 +12,7 @@ function updateDisplay(rangeElement, valueElement, switchElement) {
 function setControlDial(rangeElement, valueElement, switchElement, webMidiAPISend) {
     updateDisplay(rangeElement, valueElement, switchElement);
 
-    rangeElement.addEventListener("change", function() {
+    rangeElement.addEventListener("input", function() {
         updateDisplay(rangeElement, valueElement,switchElement);
         webMidiAPISend(rangeElement.value);
     });
