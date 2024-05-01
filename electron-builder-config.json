@@ -13,7 +13,7 @@
           ]
         }
       ],
-      "icon": "build/icon.ico"
+      "icon": "build/bluguitar-logo.ico"
     },
     "mac": {
       "target": [
