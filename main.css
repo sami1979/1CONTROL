@@ -19,3 +19,13 @@
 #controls {
     margin-top: 5%;
 }
+
+#switch-percent-nominal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#switch-percent-nominal-text {
+    margin-right: 15px;
+}
