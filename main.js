@@ -14,7 +14,7 @@ function createMainWindow() {
     width: 400,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'index-preload.js')
     }
   })
 
@@ -41,7 +41,7 @@ function createMainWindow() {
 
   if (debuggerToolsEnabled) { win.webContents.openDevTools(); }
 
-  win.loadFile('main.html');
+  win.loadFile('index.html');
   return win;
 }
 
