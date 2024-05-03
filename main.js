@@ -4,14 +4,14 @@ const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutpu
 const path = require('node:path')
 const log = require('electron-log/main')
 
-const debuggerTools = true;
+const debuggerToolsEnabled = false;
 log.initialize();
 log.transports.console.level = 'debug';
 
 
 function createMainWindow() {
   const win = new BrowserWindow({
-    width: 800,
+    width: 400,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
@@ -37,7 +37,7 @@ function createMainWindow() {
   });
   
 
-  if (debuggerTools) { win.webContents.openDevTools(); }
+  if (debuggerToolsEnabled) { win.webContents.openDevTools(); }
 
   win.loadFile('main.html');
   return win;
@@ -49,7 +49,7 @@ function createMidiDeviceSelectWindow(parentWindow) {
     modal: true,
     show: false,
     width: 300,
-    height: 200,
+    height: 100,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true, // Required for dropdown interaction
@@ -59,7 +59,7 @@ function createMidiDeviceSelectWindow(parentWindow) {
 
   popup.loadFile('device-popup.html'); // Load the popup HTML file
 
-  popup.webContents.openDevTools();
+  if (debuggerToolsEnabled) { popup.webContents.openDevTools(); }
 
   popup.once('ready-to-show', () => {
     popup.show();

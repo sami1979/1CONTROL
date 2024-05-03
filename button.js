@@ -39,7 +39,7 @@ const controlDials = [
     }
 ];
 
-const switchElement = document.getElementById("switch");
+const switchElement = document.getElementById("switch-percent-nominal");
 switchElement.addEventListener("change", function() {
     controlDials.forEach(function(controlDial){
         updateDisplay(
@@ -53,6 +53,6 @@ controlDials.forEach(function(controlDial) {
     setControlDial(
         controlDial.rangeElement, 
         controlDial.valueElement,
-        document.getElementById("switch"), 
+        switchElement, 
         controlDial.webMidiAPISend);
 });
