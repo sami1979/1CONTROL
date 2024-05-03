@@ -106,13 +106,10 @@ app.whenReady().then(() => {
   const mainWindow = createMainWindow();
   popupWindow = createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
-
-  
 });
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    startWebMidi();
     const mainWindow = createMainWindow();
     if (midiOutputDevice.getInstance() == null) {
       createMidiDeviceSelectWindow(mainWindow);
