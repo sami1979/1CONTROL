@@ -111,7 +111,7 @@ app.whenReady().then(() => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     const mainWindow = createMainWindow();
-    if (midiOutputDevice.getInstance() == null) {
+    if (getActiveMidiOutputDevice() == null) {
       createMidiDeviceSelectWindow(mainWindow);
     }
   }
