@@ -18,8 +18,13 @@ function closeWindow() {
     window.WebMidiAPI.setMidiOutputId(selectElement.value);
     //alert(selectElement.value + typeof selectElement.value);
     window.WebMidiAPI.closeDevicePopup();
+    return true;
 }
 
 setDeviceListOptions();
 
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('device-form');
+    form.addEventListener('submit', closeWindow);
+});
 

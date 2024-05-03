@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; style-src 'self'; img-src 'self';">
 </head>
-<body>
-    
-    <form action="#" onsubmit="closeWindow()">
+<body> 
+    <form id="device-form">
         <label for="MidiOutoutDevices">Select Midi Output Device:</label>
         <select name="Midi Output Devices" id="midiOutSelect"></select>
-        <input type="submit" value="Select">
+        <input type="submit" value="Select" />
     </form>
     <script src="./device-popup.js"></script>
 </body>
