@@ -17,6 +17,8 @@ function createMainWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+
+  win.setTitle(`1CONTROL v${app.getVersion()}`);
   
   win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
     if (permission === 'midi' || permission === 'midiSysex') {
@@ -57,6 +59,7 @@ function createMidiDeviceSelectWindow(parentWindow) {
     }
   });
 
+  popup.setTitle(`1CONTROL v${app.getVersion()}`);
   popup.loadFile('device-popup.html'); // Load the popup HTML file
 
   if (debuggerToolsEnabled) { popup.webContents.openDevTools(); }
