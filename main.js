@@ -114,7 +114,9 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     startWebMidi();
     const mainWindow = createMainWindow();
-    createMidiDeviceSelectWindow(mainWindow);
+    if (midiOutputDevice.getInstance() == null) {
+      createMidiDeviceSelectWindow(mainWindow);
+    }
   }
 });
 
