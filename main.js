@@ -14,9 +14,11 @@ function createMainWindow() {
     width: 400,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'index-preload.js')
     }
   })
+
+  win.setTitle(`1CONTROL v${app.getVersion()}`);
   
   win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
     if (permission === 'midi' || permission === 'midiSysex') {
@@ -39,7 +41,7 @@ function createMainWindow() {
 
   if (debuggerToolsEnabled) { win.webContents.openDevTools(); }
 
-  win.loadFile('main.html');
+  win.loadFile('index.html');
   return win;
 }
 
@@ -57,6 +59,7 @@ function createMidiDeviceSelectWindow(parentWindow) {
     }
   });
 
+  popup.setTitle(`1CONTROL v${app.getVersion()}`);
   popup.loadFile('device-popup.html'); // Load the popup HTML file
 
   if (debuggerToolsEnabled) { popup.webContents.openDevTools(); }
