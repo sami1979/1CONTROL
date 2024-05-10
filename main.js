@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron/main')
+const { app, BrowserWindow, ipcMain, Menu } = require('electron/main')
 //const { WebMidi } = require("webmidi");
 const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
 const path = require('node:path')
@@ -7,6 +7,34 @@ const log = require('electron-log/main')
 const debuggerToolsEnabled = false;
 log.initialize();
 log.transports.console.level = 'debug';
+
+const isMac = process.platform === 'darwin'
+
+function createAppMenu() {
+  let macTemplate = [];
+  if (isMac) {
+    macTemplate = [
+      {
+        label: app.name,
+        submenu: [
+          { role: 'quit' }
+        ]
+      }
+    ];
+  }
+
+  const template = [
+    {
+      label: 'File',
+      submenu: [
+        { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(macTemplate.concat(template));
+  Menu.setApplicationMenu(menu);
+}
 
 
 function createMainWindow() {
@@ -123,7 +151,8 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
   disableWebMidi();
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     app.quit();
   }
 })
+
