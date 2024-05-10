@@ -4,6 +4,11 @@
 
 ![1CONTROL GUI](docs/pics/1CONTROL-GUI.png)
 
+## Release
+
+Downloads:
+[Releases](https://github.com/sami1979/1CONTROL/releases)
+
 ## Q&A
 
 **Q: What do I need to use the !CONTROL App?**
