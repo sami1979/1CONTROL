@@ -1,3 +1,5 @@
+'use strict';
+
 const { app, BrowserWindow, ipcMain, Menu } = require('electron/main')
 //const { WebMidi } = require("webmidi");
 const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
@@ -135,7 +137,7 @@ app.whenReady().then(() => {
 
   startWebMidi();
   const mainWindow = createMainWindow();
-  popupWindow = createMidiDeviceSelectWindow(mainWindow);
+  const popupWindow = createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 });
 
