@@ -156,3 +156,4 @@ app.on('window-all-closed', () => {
   }
 })
 
+createAppMenu();
