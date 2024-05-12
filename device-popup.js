@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 async function setDeviceListOptions() {
     const selectElement = document.getElementById('midiOutSelect');
