@@ -1,7 +1,6 @@
 'use strict';
 
 const { app, BrowserWindow, ipcMain, Menu } = require('electron/main')
-//const { WebMidi } = require("webmidi");
 const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
 const path = require('node:path')
 const log = require('electron-log/main')
@@ -11,6 +10,8 @@ log.initialize();
 log.transports.console.level = 'debug';
 
 const isMac = process.platform === 'darwin'
+let mainWindow = null;
+let popupWindow = null;
 
 function createAppMenu() {
   let macTemplate = [];
@@ -29,6 +30,8 @@ function createAppMenu() {
     {
       label: 'File',
       submenu: [
+        { label: 'Midi Preferences', accelerator: 'CmdOrCtrl+M', click: () => popupWindow = createMidiDeviceSelectWindow(mainWindow) },
+        { type: 'separator' },
         { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }
       ]
     }
@@ -133,11 +136,16 @@ app.whenReady().then(() => {
     })
   });
 
-  ipcMain.on('close-DevicePopup', (event) => popupWindow.close());
+  ipcMain.on('close-DevicePopup', (event) => {
+    if (popupWindow) {
+      popupWindow.close();
+      popupWindow = null;
+    }
+  });
 
   startWebMidi();
-  const mainWindow = createMainWindow();
-  const popupWindow = createMidiDeviceSelectWindow(mainWindow);
+  mainWindow = createMainWindow();
+  popupWindow = createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 });
 
