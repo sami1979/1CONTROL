@@ -10,8 +10,6 @@ log.initialize();
 log.transports.console.level = 'debug';
 
 const isMac = process.platform === 'darwin'
-let mainWindow = null;
-let popupWindow = null;
 
 function createAppMenu() {
   let macTemplate = [];
@@ -30,7 +28,7 @@ function createAppMenu() {
     {
       label: 'File',
       submenu: [
-        { label: 'Midi Preferences', accelerator: 'CmdOrCtrl+M', click: () => popupWindow = createMidiDeviceSelectWindow(mainWindow) },
+        { label: 'Midi Preferences', accelerator: 'CmdOrCtrl+M', click: () => createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow()) },
         { type: 'separator' },
         { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }
       ]
@@ -137,15 +135,12 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on('close-DevicePopup', (event) => {
-    if (popupWindow) {
-      popupWindow.close();
-      popupWindow = null;
-    }
+    BrowserWindow.fromId(event.sender.id).close();
   });
 
   startWebMidi();
-  mainWindow = createMainWindow();
-  popupWindow = createMidiDeviceSelectWindow(mainWindow);
+  const mainWindow = createMainWindow();
+  createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 });
 
