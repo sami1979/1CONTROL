@@ -1,5 +1,6 @@
+'use strict';
+
 const { app, BrowserWindow, ipcMain, Menu } = require('electron/main')
-//const { WebMidi } = require("webmidi");
 const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
 const path = require('node:path')
 const log = require('electron-log/main')
@@ -27,6 +28,8 @@ function createAppMenu() {
     {
       label: 'File',
       submenu: [
+        { label: 'Midi Preferences', accelerator: 'CmdOrCtrl+M', click: () => createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow()) },
+        { type: 'separator' },
         { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }
       ]
     }
@@ -131,11 +134,13 @@ app.whenReady().then(() => {
     })
   });
 
-  ipcMain.on('close-DevicePopup', (event) => popupWindow.close());
+  ipcMain.on('close-DevicePopup', (event) => {
+    BrowserWindow.fromId(event.sender.id).close();
+  });
 
   startWebMidi();
   const mainWindow = createMainWindow();
-  popupWindow = createMidiDeviceSelectWindow(mainWindow);
+  createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 });
 
