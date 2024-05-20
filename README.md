@@ -11,6 +11,6 @@ Downloads:
 
 ## Q&A
 
-**Q: What do I need to use the !CONTROL App?**
+**Q: What do I need to use the 1CONTROL App?**
 
 **A:** First of all you need an Bluguitar AMP1 :grin:. You need a Midi Interface for your computer device and the [Bluguitar MIDI1 adapter](https://bluguitar.com/en/products/accessoires/midi1).
