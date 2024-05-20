@@ -150,6 +150,8 @@ app.on('activate', () => {
     if (getActiveMidiOutputDevice() == null) {
       createMidiDeviceSelectWindow(mainWindow);
     }
+  } else if (getActiveMidiOutputDevice() == null) {
+    createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow())
   }
 });
 
