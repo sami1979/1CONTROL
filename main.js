@@ -1,17 +1,17 @@
 'use strict';
 
-const { app, BrowserWindow, ipcMain, Menu } = require('electron/main')
-const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require("./WebMidiIMP")
-const path = require('node:path')
-const log = require('electron-log/main')
+const { app, BrowserWindow, ipcMain, Menu } = require('electron/main');
+const { onMidiEnabled, sendCCselectedOut, disableWebMidi, startWebMidi, getOutputDevices, midiOutputDevice, setActiveMidiOutputDevice, getActiveMidiOutputDevice } = require('./WebMidiIMP');
+const path = require('node:path');
+const log = require('electron-log/main');
 
 const debuggerToolsEnabled = false;
 log.initialize();
 log.transports.console.level = 'debug';
 
-const isMac = process.platform === 'darwin'
+const isMac = process.platform === 'darwin';
 
-function createAppMenu() {
+function createAppMenu () {
   let macTemplate = [];
   if (isMac) {
     macTemplate = [
@@ -39,36 +39,33 @@ function createAppMenu() {
   Menu.setApplicationMenu(menu);
 }
 
-
-function createMainWindow() {
+function createMainWindow () {
   const win = new BrowserWindow({
     width: 400,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'index-preload.js')
     }
-  })
+  });
 
   win.setTitle(`1CONTROL v${app.getVersion()}`);
-  
+
   win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
     if (permission === 'midi' || permission === 'midiSysex') {
       log.debug('Set Midi Permission true');
       callback(true);
-    } 
-    else {
-      log.debug('Don\'t Set Midi Permission true')
+    } else {
+      log.debug('Don\'t Set Midi Permission true');
       callback(false);
     }
-  })
-  
+  });
+
   win.webContents.session.setPermissionCheckHandler((webContents, permission, requestingOrigin) => {
     if (permission === 'midi' || permission === 'midiSysex') {
       return true;
     }
     return false;
   });
-  
 
   if (debuggerToolsEnabled) { win.webContents.openDevTools(); }
 
@@ -76,7 +73,7 @@ function createMainWindow() {
   return win;
 }
 
-function createMidiDeviceSelectWindow(parentWindow) {
+function createMidiDeviceSelectWindow (parentWindow) {
   const popup = new BrowserWindow({
     parent: parentWindow,
     modal: true,
@@ -104,10 +101,10 @@ function createMidiDeviceSelectWindow(parentWindow) {
 
 app.whenReady().then(() => {
   ipcMain.on('send-CC', (event, channel, cc, value) => {
-    sendCCselectedOut(channel, cc, value)
-    console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`)
+    sendCCselectedOut(channel, cc, value);
+    console.log(`Channel: ${channel}, CC: ${cc}, Value: ${value}`);
   });
-  
+
   ipcMain.handle('open-DeviceSelection', () => {
     const devices = getOutputDevices();
     const deviceList = [];
@@ -115,10 +112,10 @@ app.whenReady().then(() => {
       const deviceDetails = {
         name: device.name,
         id: device.id
-      }
+      };
       deviceList.push(deviceDetails);
       log.debug(`ipcMain.handle(open-DeviceSelection) DeviceList: ${deviceList}`);
-    })
+    });
     return deviceList;
   });
 
@@ -126,12 +123,12 @@ app.whenReady().then(() => {
     const devices = getOutputDevices();
     log.debug(`ipcMain.on(set-MidiOutputId ) midiOutputDevice Before: ${midiOutputDevice}`);
     devices.forEach((device) => {
-      log.debug(`${device.id} :  ${midiOutputId}`)
+      log.debug(`${device.id} :  ${midiOutputId}`);
       if (device.id === midiOutputId) {
         setActiveMidiOutputDevice(device);
-        log.debug(`ipcMain.on(set-MidiOutputId ) midiOutputDevice After: ${getActiveMidiOutputDevice().id}`)
+        log.debug(`ipcMain.on(set-MidiOutputId ) midiOutputDevice After: ${getActiveMidiOutputDevice().id}`);
       }
-    })
+    });
   });
 
   ipcMain.on('close-DevicePopup', (event) => {
@@ -151,16 +148,15 @@ app.on('activate', () => {
       createMidiDeviceSelectWindow(mainWindow);
     }
   } else if (getActiveMidiOutputDevice() == null) {
-    createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow())
+    createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow());
   }
 });
-
 
 app.on('window-all-closed', () => {
   disableWebMidi();
   if (!isMac) {
     app.quit();
   }
-})
+});
 
 createAppMenu();
