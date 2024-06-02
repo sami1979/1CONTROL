@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^30.0.1"
+    "@electron-internal/eslint-config": "^1.0.1",
+    "electron": "^30.0.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-node": "^11.1.0"
   },
   "dependencies": {
     "electron-log": "^5.1.2",
