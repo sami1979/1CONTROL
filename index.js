@@ -10,7 +10,7 @@ function updateDisplay (nameElement, rangeElement, valueElement, switchElement) 
   }
   valueElement.textContent = value;
 
-  if (nameElement == 'Soak') {
+  if (nameElement === 'Soak') {
     const soakLabel = document.getElementById(SOAK_LABEL);
     if (rangeElement.value < 65) {
       soakLabel.innerText = 'SOAK Home';
@@ -65,6 +65,6 @@ controlDials.forEach(function (controlDial) {
     controlDial.name,
     controlDial.rangeElement,
     controlDial.valueElement,
-    switchElement, 
+    switchElement,
     controlDial.webMidiAPISend);
 });
