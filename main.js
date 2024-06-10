@@ -11,6 +11,8 @@ log.transports.console.level = 'debug';
 
 const isMac = process.platform === 'darwin';
 
+let midiDeviceSelectionWindow = null;
+
 function createAppMenu () {
   let macTemplate = [];
   if (isMac) {
@@ -132,12 +134,13 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on('close-DevicePopup', (event) => {
-    BrowserWindow.fromId(event.sender.id).close();
+    midiDeviceSelectionWindow.close();
+    midiDeviceSelectionWindow = null;
   });
 
   startWebMidi();
   const mainWindow = createMainWindow();
-  createMidiDeviceSelectWindow(mainWindow);
+  midiDeviceSelectionWindow = createMidiDeviceSelectWindow(mainWindow);
   log.info('Electron Window started');
 });
 
@@ -145,10 +148,10 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     const mainWindow = createMainWindow();
     if (getActiveMidiOutputDevice() == null) {
-      createMidiDeviceSelectWindow(mainWindow);
+      midiDeviceSelectionWindow = createMidiDeviceSelectWindow(mainWindow);
     }
   } else if (getActiveMidiOutputDevice() == null) {
-    createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow());
+    midiDeviceSelectionWindow = createMidiDeviceSelectWindow(BrowserWindow.getFocusedWindow());
   }
 });
 
