@@ -2,29 +2,53 @@
 
 const SOAK_LABEL = 'soak-label';
 
-function updateDisplay (nameElement, rangeElement, valueElement, switchElement) {
-  let value = rangeElement.value;
-  if (switchElement.checked) {
+/**
+ * Updates the knob values and SOAK mode in the UI
+ * @param {object} data
+ * @param {string} data.nameElement
+ * @param {HTMLElement} data.rangeElement
+ * @param {HTMLElement} data.valueElement
+ * @param {HTMLElement} data.switchElement
+ */
+function updateDisplay (data) {
+  let value = data.rangeElement.value;
+  if (data.switchElement.checked) {
     value = parseInt(value / 1.27).toFixed(0);
     value = String(value).concat(' %');
   }
-  valueElement.textContent = value;
+  data.valueElement.textContent = value;
 
-  if (nameElement === 'Soak') {
+  if (data.nameElement === 'Soak') {
     const soakLabel = document.getElementById(SOAK_LABEL);
-    if (rangeElement.value < 65) {
+    if (data.rangeElement.value < 65) {
       soakLabel.innerText = 'SOAK Home';
-    } else if (rangeElement.value > 64) {
+    } else if (data.rangeElement.value > 64) {
       soakLabel.innerText = 'SOAK Stage';
     }
   }
 }
 
-function setControlDial (nameElement, rangeElement, valueElement, switchElement, webMidiAPISend) {
-  updateDisplay(nameElement, rangeElement, valueElement, switchElement);
-  rangeElement.addEventListener('input', function () {
-    updateDisplay(nameElement, rangeElement, valueElement, switchElement);
-    webMidiAPISend(rangeElement.value);
+/**
+ * Function to initiate EventListener for knob
+ * @param {object} data
+ * @param {string} data.nameElement
+ * @param {HTMLElement} data.rangeElement
+ * @param {HTMLElement} data.valueElement
+ * @param {HTMLElement} data.switchElement
+ * @param {*} data.webMidiAPISend
+ */
+function setControlDial (data) {
+  // nameElement, rangeElement, valueElement, switchElement, webMidiAPISend
+  const updateDisplayData = {
+    nameElement: data.nameElement,
+    rangeElement: data.rangeElement,
+    valueElement: data.valueElement,
+    switchElement: data.switchElement
+  };
+  updateDisplay(updateDisplayData);
+  data.rangeElement.addEventListener('input', function () {
+    updateDisplay(updateDisplayData);
+    data.webMidiAPISend(data.rangeElement.value);
   });
 }
 
@@ -53,18 +77,24 @@ const switchElement = document.getElementById('switch-percent-nominal');
 switchElement.addEventListener('change', function () {
   controlDials.forEach(function (controlDial) {
     updateDisplay(
-      controlDial.name,
-      controlDial.rangeElement,
-      controlDial.valueElement,
-      switchElement);
+      {
+        name: controlDial.name,
+        rangeElement: controlDial.rangeElement,
+        valueElement: controlDial.valueElement,
+        switchElement: switchElement
+      }
+    );
   });
 });
 
 controlDials.forEach(function (controlDial) {
   setControlDial(
-    controlDial.name,
-    controlDial.rangeElement,
-    controlDial.valueElement,
-    switchElement,
-    controlDial.webMidiAPISend);
+    {
+      nameElement: controlDial.name,
+      rangeElement: controlDial.rangeElement,
+      valueElement: controlDial.valueElement,
+      switchElement: switchElement,
+      webMidiAPISend: controlDial.webMidiAPISend
+    }
+  );
 });
