@@ -1,6 +1,6 @@
 {
   "name": "1CONTROL",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "1CONTROL emulation from 1CONTROL Bluguitar",
   "main": "main.js",
   "scripts": {
