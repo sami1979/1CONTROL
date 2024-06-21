@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron/renderer')
+const { contextBridge, ipcRenderer } = require('electron/renderer');
 
 contextBridge.exposeInMainWorld('WebMidiAPI', {
   sendCC2ndMASTER: (value) => {
@@ -18,4 +18,4 @@ contextBridge.exposeInMainWorld('WebMidiAPI', {
   },
   openMidiDeviceSelection: () => ipcRenderer.invoke('open-DeviceSelection'),
   setMidiOutputId: (midiOutputId) => ipcRenderer.send('set-MidiOutputId', midiOutputId)
-})
+});

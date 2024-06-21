@@ -1,0 +1,4 @@
+{
+    "extends": "@electron-internal",
+    "ignorePatterns": ["input-knobs.js"]
+}
