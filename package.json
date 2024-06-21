@@ -11,7 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@electron-internal/eslint-config": "^1.0.1",
-    "electron": "^30.0.1",
+    "electron": "^31.0.2",
     "eslint": "^8.57.0",
     "eslint-plugin-node": "^11.1.0"
   },
